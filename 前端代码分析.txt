@@ -1,0 +1,9 @@
+D:\nd__front\make\make_front_team_xx_0x
+npm run serve
+
+<!-- 
+  @Description: 部门前端页面
+  @author neuedu
+  @date 2023-12-06
+-->
+

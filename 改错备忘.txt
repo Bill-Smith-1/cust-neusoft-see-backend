@@ -1,0 +1,77 @@
+【前端】 
+<!-- 第二行数据列表 开始   opacity:0.5;-->
+<el-table :data="empData" style="width:100%;"
+
+//查询方法==获取后端员工数据 
+getData(page, count){
+
+//获取员工数据 后端设置跨域访问了，前端不用设置了
+axios.get(url).then(resp=> {  //箭头函数
+_this.empData = resp.data.list;
+console.log(_this.empData);
+
+//添加员工的方法
+addNewEmp(){
+if ( _this.addEmp.empno == null || _this.addEmp.empno.length == 0
+let str=qs.stringify(_this.addEmp);   //插入问题   【addEmp】  addDept
+
+
+//打开修改对话框
+openUpdateDialog(rIndex, row){
+ _this.updateEmp.empno = row.empno;
+
+
+//修改员工的方法
+modifyEmp() {
+if (_this.updateEmp.empno == null || _this.updateEmp.empno.length == 0
+let str=qs.stringify(_this.updateEmp); //插入问题  【updateEmp】  updateDept
+
+
+//删除按钮执行的方法
+deleteRow(rIndex,row) {
+_this.$confirm('确认删除 "' + row.ename + '" ?', '提示', {  【row.ename】
+
+
+//批量删除部门
+datdel() { 
+for (let i = 0; i < selItems.length; i++) {
+   ids += selItems[i].empno + ",";  【empno】
+}
+
+//数据定义区
+data() {
+
+ename:'',
+empData:[],  //接收服务器传来的员工数据
+addEmp:{},
+updateEmp:{}
+
+
+空白页面问题
+
+路由文件 index.js
+path:'/emp',
+name:'emp',
+component:()=>import('../components/sysmag/Emp.vue')
+
+数据库
+
+表sys_menu   字段内容==/emp
+
+***************前端运行服务
+cmd管理员身份运行后 进入目录再 npm run serve | dev
+***************
+
+====================================================================================================
+【后端】 
+
+***************
+数据库 字段 大 小写 问题
+mapper.xml 文件里的语法  要和表结构里的字段名一模一样
+实体类  首字母小写，其他和文档一样即可
+***************
+
+<if test="userName !=null and userName !=''">
+    表结构     实体属性
+    UserName=#{userName},
+</if>

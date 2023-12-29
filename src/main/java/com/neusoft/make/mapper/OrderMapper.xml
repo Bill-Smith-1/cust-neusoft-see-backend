@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 
+  @Description: 订单Mapper配置文件
+  @author: 吴则朋
+  @date: 2023-12-28
+-->
+<mapper namespace="com.neusoft.make.mapper.OrderMapper">
+ 
+   <!-- 单条件获取符合条件的订单数量 -->
+   <select id="getOrderCount" resultType="int">
+        SELECT COUNT(*) FROM `ORDER`
+        <where>
+        <!--字段名参考建表语句 -->
+	        <if test="keywords!=null">
+	           AND (ID LIKE concat('%',#{keywords},'%')
+	        </if>
+	        <if test="keywords!=null">
+	           OR ProductName LIKE concat('%',#{keywords},'%') )
+	        </if>
+        </where>
+   </select>
+   
+   <!--单条件分页查询订单信息-->
+   <select id="listOrder" resultType="Order">
+       SELECT * FROM `ORDER`
+       <where>
+	       <if test="keywords!=null">
+	        <!--字段名参考建表语句 -->
+	           AND (ID LIKE concat('%',#{keywords},'%')
+	       </if>
+	       <if test="keywords!=null">
+	            OR ProductName LIKE concat('%',#{keywords},'%') )
+	       </if>
+       </where>
+        ORDER BY ID  limit #{pageNum},#{maxPageNum};
+    </select>
+    
+    <!-- 订单添加 -->
+    <insert id="addOrder" parameterType="java.util.Map">
+       INSERT INTO `ORDER`
+       <set>
+       <!--字段名(等号左边)参考建表语句   等号右边参考实体类属性 -->
+	        <if test="id !=null and id !=''">
+	           ID=#{id},
+	        </if>
+	        <if test="productName !=null and productName !=''">
+	           ProductName=#{productName},
+	        </if>
+	        <if test="orderQuantity !=null and orderQuantity !=''">
+	           OrderQuantity=#{orderQuantity},
+	        </if>
+	        <if test="submitDate !=null and submitDate !=''">
+	           SubmitDate=#{submitDate},
+	        </if>
+	        <if test="endDate !=null and endDate !=''">
+	           EndDate=#{endDate},
+	        </if>
+	        <if test="consignee !=null and consignee !=''">
+	         Consignee=#{consignee},
+	        </if>
+	        <if test="contactInfo !=null and contactInfo !=''">
+	           ContactInfo=#{contactInfo},
+	        </if>
+	        <if test="address !=null and address !=''">
+	           Address=#{address},
+	        </if>
+	        <if test="orderStatus  !=null and orderStatus  !=''">
+	           OrderStatus =#{orderStatus },
+	        </if>
+	        
+
+	        
+       </set> 
+    </insert>
+    
+    <!-- 订单更新 -->
+    <update id="updateOrderById" parameterType="java.util.Map">
+        UPDATE `ORDER`
+        <set>
+        	<if test="id !=null and id !=''">
+	           ID=#{id},
+	        </if>
+	        <if test="productName !=null and productName !=''">
+	           ProductName=#{productName},
+	        </if>
+	        <if test="orderQuantity !=null and orderQuantity !=''">
+	           OrderQuantity=#{orderQuantity},
+	        </if>
+	        <if test="submitDate !=null and submitDate !=''">
+	           SubmitDate={#submitDate},
+	        </if>
+	        <if test="endDate !=null and endDate !=''">
+	           EndDate=#{endDate},
+	        </if>
+	        <if test="consignee !=null and consignee !=''">
+	         Consignee=#{consignee},
+	        </if>
+	        <if test="contactInfo !=null and contactInfo !=''">
+	           ContactInfo=#{contactInfo},
+	        </if>
+	        <if test="address !=null address !=''">
+	           Address=#{address},
+	        </if>
+	        <if test="orderStatus  !=null and orderStatus  !=''">
+	           OrderStatus =#{orderStatus },
+	        </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    
+    <!-- 订单删除-->
+    <delete id="deleteOrderByIds" >
+        DELETE FROM `ORDER` WHERE ID=#{id}
+    </delete>
+</mapper>

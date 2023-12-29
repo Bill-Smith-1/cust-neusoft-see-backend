@@ -1,0 +1,36 @@
+SpringBoot  SSM框架   MVC模式
+
+MVC模式包名命名规则
+包名必须都是小写字母
+com.neusoft.make.controller;  //控制器  接收用户请求
+com.neusoft.make.service;     //业务层接口
+com.neusoft.make.service.impl;//业务层接口实现类
+com.neusoft.make.mapper;      //数据层接口 和映射文件
+
+com.neusoft.make.dto;         //数据传输对象
+com.neusoft.make.po;          //实体类对象包
+
+com.neusoft.util;             //工具包
+================================================================
+开发步骤
+01：创建表  如： CREATE TABLE dept
+02：创建实体类   如：Dept 放在 com.neusoft.emp.po包里
+03：创建mapper接口和映射文件   放在  com.neusoft.emp.mapper包里
+04：创建数据传输对象  放在  com.neusoft.emp.dto包里    只做一次
+05：创建service接口和service实现类
+    service层 调用 mapper层
+06：创建控制器    放在 com.neusoft.emp.controller包里
+    controller层 调用 service层
+07：测试后端功能    
+
+根据 部门 管理 开发 员工管理功能
+01：创建表  如： CREATE TABLE emp
+02：创建实体类   如：Emp 放在 com.neusoft.emp.po包里
+03：创建mapper接口和映射文件   放在  com.neusoft.emp.mapper包里
+04：创建数据传输对象  放在  com.neusoft.emp.dto包里    只做一次,本次不做了
+05：创建service接口和service实现类
+    service层 调用 mapper层
+06：创建控制器    放在 com.neusoft.emp.controller包里
+    controller层 调用 service层    
+07：测试后端功能        
+====================================================================

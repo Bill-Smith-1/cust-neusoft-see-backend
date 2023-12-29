@@ -1,0 +1,31 @@
+1.注释设置
+首先打开Eclipse，依次点击
+Windows->Preference->java->Code Style->Code Templates->Comments
+----------------------------------------------------------------------
+Comment for created types
+/**
+ * @Description: 
+ * @author: neuedu
+ * @date: 2023-12-06
+ */
+
+
+Comment for non-overriding methods
+/**
+ * @Description:
+ * @param1:
+ * @return1:
+ * @exception1:
+ */
+
+删除  getter method   setter method
+
+勾选  Automatically add comments
+========================================================================
+2.保存设置
+首先打开Eclipse，依次点击
+Windows->Preference->java->Editor-->Save Actions 
+从上到下
+勾选 
+勾选 
+点选

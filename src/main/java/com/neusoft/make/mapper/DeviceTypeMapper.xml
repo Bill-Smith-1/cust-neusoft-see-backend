@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 
+  @Description: 设备类型Mapper配置文件
+  @author: 马硕
+  @date: 2023-12-26
+-->
+<mapper namespace="com.neusoft.make.mapper.DeviceTypeMapper">
+ 
+   <!-- 单条件获取符合条件的设备类型数量 -->
+   <select id="getDeviceTypeCount" resultType="int">
+        SELECT COUNT(*) FROM DeviceType
+        <where>
+	        <if test="keywords!=null">
+	           AND (id LIKE concat('%',#{keywords},'%')
+	        </if>
+	        <if test="keywords!=null">
+	           OR typeName LIKE concat('%',#{keywords},'%') )
+	        </if>
+        </where>
+   </select>
+   
+   <!--单条件分页查询设备类型信息-->
+   <select id="listDeviceType" resultType="DeviceType">
+       SELECT * FROM DeviceType
+       <where>
+	       <if test="keywords!=null">
+	           AND (id LIKE concat('%',#{keywords},'%')
+	       </if>
+	       <if test="keywords!=null">
+	            OR typeName LIKE concat('%',#{keywords},'%') )
+	       </if>
+       </where>
+        ORDER BY id  limit #{pageNum},#{maxPageNum};
+    </select>
+    
+    <!-- 部门添加 -->
+    <insert id="addDeviceType" parameterType="java.util.Map">
+       INSERT INTO DeviceType 
+       <set>
+	        <if test=" id !=null and  id !=''">
+	           ID=#{id},
+	        </if>
+	        <if test="typeName !=null and typeName !=''">
+	           TypeName=#{typeName},
+	        </if>
+       </set> 
+    </insert>
+    
+    <!-- 部门更新 -->
+    <update id="updateDeviceTypeById" parameterType="java.util.Map">
+        UPDATE DeviceType 
+        <set>
+        	 <if test="typeName !=null and typeName !=''">
+	           TypeName=#{typeName},
+	         </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    
+    <!-- 部门删除 支持批量删除 item="id" #{id}-->
+    <delete id="deleteDeviceTypeByIds" >
+        delete FROM DeviceType WHERE ID=#{id}
+    </delete>
+</mapper>

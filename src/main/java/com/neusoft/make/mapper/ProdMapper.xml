@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 
+  @Description: 产品信息Mapper配置文件
+  @author: 王思鉴
+  @date: 2023-12-28
+-->
+<mapper namespace="com.neusoft.make.mapper.ProdMapper">
+ 
+   <!-- 单条件获取符合条件的产品信息数量 -->
+   <select id="getProdCount" resultType="int">
+        SELECT COUNT(*) FROM product
+        <where>
+	        <if test="keywords!=null">
+	           AND (Pcode LIKE concat('%',#{keywords},'%')
+	        </if>
+	        <if test="keywords!=null">
+	           OR Pname LIKE concat('%',#{keywords},'%') )
+	        </if>
+        </where>
+   </select>
+   
+   <!--单条件分页查询产品信息-->
+   <select id="listProd" resultType="Prod">
+       SELECT * FROM product
+       <where>
+	       <if test="keywords!=null">
+	           AND (Pcode LIKE concat('%',#{keywords},'%')
+	       </if>
+	       <if test="keywords!=null">
+	            OR Pname LIKE concat('%',#{keywords},'%') )
+	       </if>
+       </where>
+        ORDER BY Pcode  limit #{pageNum},#{maxPageNum};
+    </select>
+    
+    <!-- 产品信息添加 -->
+    <insert id="addProd" parameterType="java.util.Map">
+       INSERT INTO product 
+       <set>
+       <!-- 字段名（等号左边）参考建表语句，参数（等号右边）参考实体类属性 -->
+	        <if test="pcode !=null and pno !=''">
+				Pcode=#{pcode},
+	        </if>
+	        <if test="pname !=null and pname !=''">
+	           Pname=#{pname},
+	        </if>
+	        <if test="pcno !=null and pcno !=''">
+				Pcno=#{pcno},
+	        </if>
+	        <if test="pSpec !=null and pSpec !=''">
+				PSpec=#{pSpec},
+	        </if>
+	        <if test="pDesc !=null and pDesc !=''">
+				PDesc=#{pDesc},
+	        </if>
+	        
+       </set> 
+    </insert>
+    
+    <!-- 产品信息更新 -->
+    <update id="updateProdById" parameterType="java.util.Map">
+        UPDATE product
+        <set>
+        	<if test="pcode !=null and pno !=''">
+				Pcode=#{pcode},
+	        </if>
+	        <if test="pname !=null and pname !=''">
+	           Pname=#{pname},
+	        </if>
+	        <if test="pcno !=null and pcno !=''">
+				Pcno=#{pcno},
+	        </if>
+	        <if test="pSpec !=null and pSpec !=''">
+				PSpec=#{pSpec},
+	        </if>
+	        <if test="pDesc !=null and pDesc !=''">
+				PDesc=#{pDesc},
+	        </if>
+        </set>
+        WHERE Pcode=#{pcode}
+    </update>
+    
+    <!-- 产品信息删除 支持批量删除 item="id" #{id}-->
+    <delete id="deleteProdByIds" >
+        DELETE FROM product WHERE Pcode=#{pcode}
+    </delete>
+</mapper>

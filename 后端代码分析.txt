@@ -1,0 +1,73 @@
+1 建立表 插入测试数据
+  DROP TABLE IF EXISTS dept;
+  CREATE TABLE dept (
+	  deptno INT(11) NOT NULL,
+	  dname  VARCHAR(32) DEFAULT NULL,
+	  locid  INT(11) DEFAULT NULL,
+	  PRIMARY KEY (deptno)
+  ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+  
+ INSERT INTO dept(deptno,dname,locid) 
+ VALUES (10,'市场部',21),(20,'教学部',28),(30,'财务部',70),(40,'后勤部',56);
+  
+02：创建实体类   如：Dept 放在 com.neusoft.make.po包里
+
+03：创建mapper接口和映射文件   放在  com.neusoft.make.mapper包里
+    底层sql语句
+
+04：创建数据传输对象  放在  com.neusoft.make.dto包里    只做一次
+
+05：创建service接口和service实现类
+    service层 调用 mapper层    (中层调用底层)
+    
+06：创建控制器    放在 com.neusoft.emp.controller包里
+    controller层 调用 service层     (上层调用中层)
+    
+07：测试后端功能
+    //后端测试--查询部门--无条件
+    http://localhost:7821/newDept/listDept?pageNum=1&maxPageNum=5
+    //后端测试--查询部门--有条件
+    http://localhost:7821/newDept/listDept?pageNum=1&maxPageNum=5&keywords=3
+   
+    //后端测试--添加部门
+    http://localhost:7821/newDept/addDept?deptno=91&dname=XX&locid=100  
+    http://localhost:7821/newDept/addDept?deptno=92&dname=XX2
+    http://localhost:7821/newDept/addDept?deptno=93&locid=101
+   
+    //后端测试--更新部门
+    http://localhost:7821/newDept/updateDept?deptno=55&dname=23A  
+    http://localhost:7821/newDept/updateDept?deptno=23&locid=123 
+    http://localhost:7821/newDept/updateDept?deptno=23&locid=163&dname=23ABC
+   
+    //后端测试--删除部门
+    http://localhost:7821/newDept/deleteDept?deptno=7788
+ =============================================================================================
+  DROP TABLE IF EXISTS con;
+  CREATE TABLE con (
+  ID INT(9) NOT NULL AUTO_INCREMENT COMMENT 'ID主键',
+  ConstantTypeID INT(9) NOT NULL COMMENT '所属常数类别ID',
+  ConstantCode VARCHAR(64) NOT NULL COMMENT '常数项编码',
+  ConstantName VARCHAR(64) NOT NULL COMMENT '常数项名称',
+  DelMark INT(1) NOT NULL DEFAULT '1' COMMENT '删除标记',
+  PRIMARY KEY (ID)
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+  
+  
+ #表名小写 emp 对应文档 Emp（员工表）
+#建表语句中的字段要与表格中字段编号列一致
+CREATE TABLE emp (
+  EmpNo INT(9) NOT NULL COMMENT '员工编号',
+  EName VARCHAR(64) DEFAULT NULL COMMENT '员工姓名',
+  Job   VARCHAR(64) DEFAULT NULL COMMENT '员工工作',
+  Mgr   INT(9) DEFAULT NULL COMMENT '领导编号',
+  HireDate DATE DEFAULT NULL COMMENT '入职日期',
+  Sal DECIMAL(8,2) DEFAULT NULL COMMENT '员工工资',
+  Comm DECIMAL(8,2) DEFAULT NULL COMMENT '员工奖金',
+  DeptNo INT(9) DEFAULT NULL COMMENT '部门编号',
+  DelMark INT(1) NOT NULL DEFAULT '1' COMMENT '删除标记',
+  PRIMARY KEY (EmpNo)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+INSERT INTO emp(EmpNo,EName,Job,Mgr,HireDate,Sal,Comm,DeptNo) VALUES (1001,'Tom1166','MANAGER22',100733,'1980-02-14',10000,5000,10);
+INSERT INTO emp(EmpNo,EName,Job,Mgr,HireDate,Sal,Comm,DeptNo) VALUES (1002,'Linda','CLERK',1001,'1979-05-10',7500,NULL,20);
+  

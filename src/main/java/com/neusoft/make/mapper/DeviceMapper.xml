@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 
+  @Description: 设备Mapper配置文件
+  @author: 马硕
+  @date: 2023-12-26
+-->
+<mapper namespace="com.neusoft.make.mapper.DeviceMapper">
+ 
+   <!-- 单条件获取符合条件的设备数量 -->
+   <select id="getDeviceCount" resultType="int">
+        SELECT COUNT(*) FROM Device
+        <where>
+	        <if test="keywords!=null">
+	           AND (id LIKE concat('%',#{keywords},'%')
+	        </if>
+	        <if test="keywords!=null">
+	           OR deviceName LIKE concat('%',#{keywords},'%') )
+	        </if>
+        </where>
+   </select>
+   
+   <!--单条件分页查询设备信息-->
+   <select id="listDevice" resultType="Device">
+       SELECT * FROM Device
+       <where>
+	       <if test="keywords!=null">
+	           AND (id LIKE concat('%',#{keywords},'%')
+	       </if>
+	       <if test="keywords!=null">
+	            OR deviceName LIKE concat('%',#{keywords},'%') )
+	       </if>
+       </where>
+        ORDER BY id   limit #{pageNum},#{maxPageNum};
+    </select>
+    
+    <!-- 部门添加 -->
+    <insert id="addDevice" parameterType="java.util.Map">
+       INSERT INTO Device 
+       <set>
+	        <if test="id!=null and id !=''">
+	           ID=#{id},
+	        </if>
+	        <if test="deviceCode !=null and deviceCode !=''">
+	           DeviceCode=#{deviceCode},
+	        </if>
+	        <if test="deviceName !=null and deviceName !=''">
+	           DeviceName=#{deviceName},
+	        </if>
+	        <if test="deviceSpec !=null and deviceSpec !=''">
+	           DeviceSpec=#{deviceSpec},
+	        </if>
+	        <if test="productStatus !=null and productStatus !=''">
+	           ProductStatus=#{productStatus},
+	        </if>
+	        <if test="factory !=null and factory !=''">
+	           Factory=#{factory},
+	        </if>
+	        <if test="rentalStatus !=null and rentalStatus !=''">
+	           RentalStatus=#{rentalStatus},
+	        </if>
+	        <if test="deviceType !=null and deviceType !=''">
+	           DeviceType=#{deviceType},
+	        </if>
+       </set> 
+    </insert>
+    
+    <!-- 部门更新 -->
+    <update id="updateDeviceById" parameterType="java.util.Map">
+        UPDATE Device
+        <set>
+	        <if test="deviceCode !=null and deviceCode !=''">
+	           DeviceCode=#{deviceCode},
+	        </if>
+	        <if test="deviceName !=null and deviceName !=''">
+	           DeviceName=#{deviceName},
+	        </if>
+	        <if test="deviceSpec !=null and deviceSpec !=''">
+	           DeviceSpec=#{deviceSpec},
+	        </if>
+	        <if test="productStatus !=null and productStatus !=''">
+	           ProductStatus=#{productStatus},
+	        </if>
+	        <if test="factory !=null and factory !=''">
+	           Factory=#{factory},
+	        </if>
+	        <if test="rentalStatus !=null and rentalStatus !=''">
+	           RentalStatus=#{rentalStatus},
+	        </if>
+	        <if test="deviceType !=null and deviceType !=''">
+	           DeviceType=#{deviceType},
+	        </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    
+    <!-- 部门删除 支持批量删除 item="id" #{id}-->
+    <delete id="deleteDeviceByIds" >
+        DELETE FROM Device WHERE ID=#{id}
+    </delete>
+</mapper>

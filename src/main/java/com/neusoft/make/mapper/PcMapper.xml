@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 
+  @Description: 产品类别Mapper配置文件
+  @author: 王思鉴
+  @date: 2023-12-27
+-->
+<mapper namespace="com.neusoft.make.mapper.PcMapper">
+ 
+   <!-- 单条件获取符合条件的产品类别数量 -->
+   <select id="getPcCount" resultType="int">
+        SELECT COUNT(*) FROM ProductCategory
+        <where>
+	        <if test="keywords!=null">
+	           AND (Pcno LIKE concat('%',#{keywords},'%')
+	        </if>
+	        <if test="keywords!=null">
+	           OR Pcname LIKE concat('%',#{keywords},'%') )
+	        </if>
+        </where>
+   </select>
+   
+   <!--单条件分页查询产品类别信息-->
+   <select id="listPc" resultType="Pc">
+       SELECT * FROM ProductCategory
+       <where>
+	       <if test="keywords!=null">
+	           AND (Pcno LIKE concat('%',#{keywords},'%')
+	       </if>
+	       <if test="keywords!=null">
+	            OR Pcname LIKE concat('%',#{keywords},'%') )
+	       </if>
+       </where>
+        ORDER BY Pcno limit #{pageNum},#{maxPageNum};
+    </select>
+    
+    <!-- 产品类别添加 -->
+    <insert id="addPc" parameterType="java.util.Map">
+       INSERT INTO ProductCategory 
+       <set>
+       <!-- 字段名（等号左边）参考建表语句，参数（等号右边）参考实体类属性 -->
+	        <if test="pcno !=null and pcno !=''">
+	           Pcno=#{pcno},
+	        </if>
+	        <if test="pcname !=null and pcname !=''">
+	           Pcname=#{pcname},
+	        </if>
+	        
+       </set> 
+    </insert>
+    
+    <!-- 产品类别更新 -->
+    <update id="updatePcById" parameterType="java.util.Map">
+        UPDATE ProductCategory
+        <set>
+        	 <if test="pcno !=null and pcno !=''">
+	           Pcno=#{pcno},
+	        </if>
+	        <if test="pcname !=null and pcname !=''">
+	           Pcname=#{pcname},
+	        </if>
+	        
+        </set>
+        WHERE Pcno=#{pcno}
+    </update>
+    
+    <!-- 产品类别删除 支持批量删除 item="id" #{id}-->
+    <delete id="deletePcByIds" >
+        DELETE FROM ProductCategory WHERE Pcno=#{pcno}
+    </delete>
+</mapper>

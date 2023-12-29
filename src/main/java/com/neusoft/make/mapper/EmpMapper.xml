@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 
+  @Description: 用户Mapper配置文件
+  @author: 裴佳辉
+  @date: 2023-12-26
+-->
+<mapper namespace="com.neusoft.make.mapper.EmpMapper">
+ 
+   <!-- 单条件获取符合条件的用户数量 -->
+   <select id="getEmpCount" resultType="int">
+        SELECT COUNT(*) FROM emp
+        <where>
+        <!-- 字段名参考建表语句 -->
+	        <if test="keywords!=null">
+	           AND (ID LIKE concat('%',#{keywords},'%')
+	        </if>
+	        <if test="keywords!=null">
+	           OR UName LIKE concat('%',#{keywords},'%') )
+	        </if>
+        </where>
+   </select>
+   
+   <!--单条件分页查询用户信息-->
+   <select id="listEmp" resultType="Emp">
+       SELECT * FROM emp
+       <where>
+       	   <!-- 字段名参考建表语句 -->
+	       <if test="keywords!=null">
+	           AND (ID LIKE concat('%',#{keywords},'%')
+	       </if>
+	       <if test="keywords!=null">
+	            OR UName LIKE concat('%',#{keywords},'%') )
+	       </if>
+       </where>
+        ORDER BY ID  limit #{pageNum},#{maxPageNum};
+    </select>
+    
+    <!-- 用户注册 -->
+    <insert id="addEmp" parameterType="java.util.Map">
+       INSERT INTO emp 
+       <set>
+            <!-- 字段名（等号左边）参考建表语句 参数（等号右边）参考实体类属性 -->
+	        <if test="id !=null and id !=''">
+	           ID=#{id},
+	        </if>
+	        <if test="uName !=null and uName !=''">
+	           UName=#{uName},
+	        </if>
+	        <if test="pword !=null and pword !=''">
+	           Pword=#{pword},
+	        </if>
+	        <if test="rName !=null and rName !=''">
+	           RName=#{rName},
+	        </if>
+	        <if test="rID !=null and rID !=''">
+	           RID=#{rID},
+	        </if>
+	        <if test="cInfo !=null and cInfo !=''">
+	           CInfo=#{cInfo},
+	        </if>
+	        <if test="fName !=null and fName !=''">
+	           FName=#{fName},
+	        </if>
+	        <if test="fProfile !=null and fProfile !=''">
+	           FProfile=#{fProfile},
+	        </if>
+	        <if test="fStatus !=null and fStatus !=''">
+	           FStatus=#{fStatus},
+	        </if>
+	        <if test="delMark !=null and delMark !=''">
+	           DelMark=#{delMark},
+	        </if>
+       </set> 
+    </insert>
+    
+    <!-- 员工更新 -->
+    <update id="updateEmpById" parameterType="java.util.Map">
+        UPDATE emp
+        <set>
+        	<if test="uName !=null and uName !=''">
+	           UName=#{uName},
+	        </if>
+	        <if test="pword !=null and pword !=''">
+	           Pword=#{pword},
+	        </if>
+	        <if test="rName !=null and rName !=''">
+	           RName=#{rName},
+	        </if>
+	        <if test="rID !=null and rID !=''">
+	           RID=#{rID},
+	        </if>
+	        <if test="cInfo !=null and cInfo !=''">
+	           CInfo=#{cInfo},
+	        </if>
+	        <if test="fName !=null and fName !=''">
+	           FName=#{fName},
+	        </if>
+	        <if test="fProfile !=null and fProfile !=''">
+	           FProfile=#{fProfile},
+	        </if>
+	        <if test="fStatus !=null and fStatus !=''">
+	           FStatus=#{fStatus},
+	        </if>
+	        <if test="delMark !=null and delMark !=''">
+	           DelMark=#{delMark},
+	        </if>
+        </set>
+        WHERE ID=#{id}
+    </update>
+    
+    <!-- 用户删除 -->
+    <delete id="deleteEmpByIds" >
+        DELETE FROM emp WHERE ID=#{id}
+    </delete>
+</mapper>

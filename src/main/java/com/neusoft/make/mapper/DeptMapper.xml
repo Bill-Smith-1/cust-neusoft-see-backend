@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 
+  @Description: 部门Mapper配置文件
+  @author: neuedu
+  @date: 2023-12-06
+-->
+<mapper namespace="com.neusoft.make.mapper.DeptMapper">
+ 
+   <!-- 单条件获取符合条件的部门数量 -->
+   <select id="getDeptCount" resultType="int">
+        SELECT COUNT(*) FROM dept
+        <where>
+	        <if test="keywords!=null">
+	           AND (deptno LIKE concat('%',#{keywords},'%')
+	        </if>
+	        <if test="keywords!=null">
+	           OR dname LIKE concat('%',#{keywords},'%') )
+	        </if>
+        </where>
+   </select>
+   
+   <!--单条件分页查询部门信息-->
+   <select id="listDept" resultType="Dept">
+       SELECT * FROM dept
+       <where>
+	       <if test="keywords!=null">
+	           AND (deptno LIKE concat('%',#{keywords},'%')
+	       </if>
+	       <if test="keywords!=null">
+	            OR dname LIKE concat('%',#{keywords},'%') )
+	       </if>
+       </where>
+        ORDER BY deptno  limit #{pageNum},#{maxPageNum};
+    </select>
+    
+    <!-- 部门添加 -->
+    <insert id="addDept" parameterType="java.util.Map">
+       INSERT INTO dept 
+       <set>
+	        <if test="deptno !=null and deptno !=''">
+	           deptno=#{deptno},
+	        </if>
+	        <if test="dname !=null and dname !=''">
+	           dname=#{dname},
+	        </if>
+	        <if test="locid !=null and locid !=''">
+	           locid=#{locid},
+	        </if>
+       </set> 
+    </insert>
+    
+    <!-- 部门更新 -->
+    <update id="updateDeptById" parameterType="java.util.Map">
+        UPDATE dept
+        <set>
+        	 <if test="dname !=null and dname !=''">
+	           dname=#{dname},
+	         </if>
+	         <if test="locid !=null and locid !=''">
+	           locid=#{locid},
+	         </if>
+        </set>
+        WHERE deptno=#{deptno}
+    </update>
+    
+    <!-- 部门删除 支持批量删除 item="id" #{id}-->
+    <delete id="deleteDeptByIds" >
+        DELETE FROM dept WHERE deptno=#{deptno}
+    </delete>
+</mapper>

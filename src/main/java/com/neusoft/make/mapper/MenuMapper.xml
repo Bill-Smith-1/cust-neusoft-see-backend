@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 
+  @Description: 菜单Mapper配置文件
+  @author: neuedu
+  @date: 2023-12-06
+-->
+<mapper namespace="com.neusoft.make.mapper.MenuMapper">
+
+    <select id="listMenu" parameterType="int" resultMap="menuResultMap">
+        select * from sys_menu where menu_id in (select menu_id from sys_role_menu
+            where role_id=#{roleId})
+    </select>
+    
+    <select id="sysChildMenuList" parameterType="int" resultMap="menuResultMap">
+        select * from sys_menu where parent_id=#{parentId}
+    </select>
+    
+    <resultMap type="Menu" id="menuResultMap">
+	    <id property="menu_id" column="menu_id"/>
+	    <result property="menu_name" column="menu_name"/>
+	    <result property="parent_id" column="parent_id"/>
+	    <result property="url" column="url"/>
+	    <collection property="childMenu" column="menu_id" ofType="com.neusoft.make.po.SysMenu"
+        select="sysChildMenuList"></collection>
+	</resultMap>
+	
+	<!-- 按用户名和密码查询 相应的对象==登录 -->
+    <select id="login" resultType="User">
+        SELECT * FROM User
+        WHERE UserName=#{keywords}  AND  Password =#{keywords2} limit 0,1;
+    </select>
+</mapper>

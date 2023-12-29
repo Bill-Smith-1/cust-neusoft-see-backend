@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<properties resource="application.properties"/>
+	<classPathEntry location="" />
+  
+    <context id="MyBatisMySQL" >
+	    <jdbcConnection
+	                driverClass="${spring.datasource.driver-class-name}"
+	                connectionURL="${spring.datasource.url}"
+	                userId="${spring.datasource.username}"
+	                password="${spring.datasource.password}"/>
+	
+	    <javaTypeResolver >
+	      <property name="forceBigDecimals" value="false" />
+	    </javaTypeResolver>
+	
+	    <javaModelGenerator targetPackage="com.neusoft.make.po" targetProject="src\main\java">
+	      <property name="enableSubPackages" value="true" />
+	      <property name="trimStrings" value="true" />
+	    </javaModelGenerator>
+	
+	    <sqlMapGenerator targetPackage="com.neusoft.make.mapper"  targetProject="src\main\resources">
+	      <property name="enableSubPackages" value="true" />
+	    </sqlMapGenerator>
+	
+	    <javaClientGenerator type="XMLMAPPER" targetPackage="com.neusoft.make.mapper"  targetProject="src\main\java">
+	      <property name="enableSubPackages" value="true" />
+	    </javaClientGenerator>
+	    
+	    <!--
+	    	<javaModelGenerator targetPackage="com.neusoft.his.po" targetProject="src\main\java">
+		      <property name="enableSubPackages" value="true" />
+		      <property name="trimStrings" value="true" />
+		    </javaModelGenerator>
+		    
+		    <javaClientGenerator type="XMLMAPPER" targetPackage="com.neusoft.his.mapper"  targetProject="src\main\java">
+		      <property name="enableSubPackages" value="true" />
+		    </javaClientGenerator>
+		    
+		    <sqlMapGenerator targetPackage="com.neusoft.his.mapper"  targetProject="src\main\resources">
+		      <property name="enableSubPackages" value="true" />
+		    </sqlMapGenerator>
+        -->
+	
+	    <table tableName="%"
+			enableCountByExample="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false" 
+			selectByExampleQueryId="false">
+	      <property name="useActualColumnNames" value="true"/>
+	    </table>
+
+    </context>
+</generatorConfiguration>

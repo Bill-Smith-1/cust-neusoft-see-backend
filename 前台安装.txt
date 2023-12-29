@@ -1,0 +1,16 @@
+=====================  前端后续需要安装   ======================={
+//安装axios
+npm install axios -S        | cnpm install axios -S   
+
+//安装element-plus
+npm i element-plus --save   | cnpm i element-plus --save 
+
+//安装图标
+npm install @element-plus/icons-vue | cnpm install @element-plus/icons-vue
+//安装qs
+npm install qs              | cnpm i install qs
+
+//安装echar 报表 
+npm install echarts --save
+
+=================================================}
